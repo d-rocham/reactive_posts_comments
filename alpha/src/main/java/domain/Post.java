@@ -15,6 +15,8 @@ import domain.valueobjects.Title;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 public class Post extends AggregateEvent<PostID> {
 
@@ -41,6 +43,21 @@ public class Post extends AggregateEvent<PostID> {
 
         return post;
     }
+
+    // Finders
+
+    public Optional<Comment> getCommentById(CommentID targetCommentId) {
+        return commentList.stream()
+                .filter(comment -> comment.identity().equals(targetCommentId))
+                .findFirst();
+    }
+
+    public Optional<Reaction> getReactionById(ReactionID targetReactionId) {
+        return reactionList.stream()
+                .filter(reaction -> reaction.identity().equals(targetReactionId))
+                .findFirst();
+    }
+
 
     // Behaviours
 
@@ -93,6 +110,10 @@ public class Post extends AggregateEvent<PostID> {
         appendChange(
                 new PostEdited(postID.value(), title.value())
         ).apply();
+    }
+
+    public void modifyTitle(Title updatedTitle) {
+        this.title = Objects.requireNonNull(updatedTitle);
     }
 
 }

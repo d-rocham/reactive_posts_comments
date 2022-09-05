@@ -5,6 +5,8 @@ import domain.identifiers.CommentID;
 import domain.valueobjects.Author;
 import domain.valueobjects.Content;
 
+import java.util.Objects;
+
 public class Comment extends Entity<CommentID> {
 
     private Author author;
@@ -22,5 +24,11 @@ public class Comment extends Entity<CommentID> {
 
     public Content content() {
         return content;
+    }
+
+    // Behaviour
+
+    public void modifyContent(Content updatedContent) {
+        this.content = Objects.requireNonNull(updatedContent);
     }
 }

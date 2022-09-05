@@ -5,6 +5,8 @@ import domain.identifiers.ReactionID;
 import domain.valueobjects.Author;
 import domain.valueobjects.ReactionType;
 
+import java.util.Objects;
+
 public class Reaction extends Entity<ReactionID> {
 
     private Author author;
@@ -22,5 +24,11 @@ public class Reaction extends Entity<ReactionID> {
 
     public ReactionType reactionType() {
         return reactionType;
+    }
+
+    // Behaviours
+
+    public void modifyReactionType(ReactionType updatedReactionType) {
+        this.reactionType = Objects.requireNonNull(updatedReactionType);
     }
 }
