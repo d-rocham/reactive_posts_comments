@@ -13,7 +13,6 @@ import domain.valueobjects.Title;
 
 import java.lang.reflect.InaccessibleObjectException;
 import java.util.ArrayList;
-import java.util.Optional;
 
 public class PostChange extends EventChange {
 
