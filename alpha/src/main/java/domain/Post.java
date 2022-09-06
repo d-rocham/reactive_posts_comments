@@ -102,7 +102,7 @@ public class Post extends AggregateEvent<PostID> {
         ).apply();
     }
 
-    public void postEdited(PostID postID, Title title) {
+    public void editPost(PostID postID, Title title) {
         Objects.requireNonNull(postID);
         Objects.requireNonNull(title);
 

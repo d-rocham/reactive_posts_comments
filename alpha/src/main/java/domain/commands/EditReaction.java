@@ -1,6 +1,8 @@
 package domain.commands;
 
-public class EditReaction {
+import co.com.sofka.domain.generic.Command;
+
+public class EditReaction extends Command {
 
     private String postID;
     private String reactionID;
