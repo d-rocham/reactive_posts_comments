@@ -53,6 +53,7 @@
             <groupId>org.springframework.amqp</groupId>
             <artifactId>spring-rabbit-test</artifactId>
             <scope>test</scope>
+            <version>2.4.6</version>
         </dependency>
         <dependency>
             <groupId>co.com.sofka</groupId>
