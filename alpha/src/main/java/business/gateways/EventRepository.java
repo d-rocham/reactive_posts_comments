@@ -6,6 +6,6 @@ import reactor.core.publisher.Mono;
 
 public interface EventRepository {
 
-    Flux<DomainEvent> findPostById (String id);
+    Flux<DomainEvent> findById (String id);
     Mono<DomainEvent> saveEvent(DomainEvent event);
 }
