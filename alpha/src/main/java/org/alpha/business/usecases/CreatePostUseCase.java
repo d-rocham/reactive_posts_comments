@@ -33,6 +33,7 @@ public class CreatePostUseCase extends UseCaseForCommand<CreatePost> {
     }
 
     // Why does it return a Flux instead of a Mono?
+    @Override
     public Flux<DomainEvent> apply(Mono<CreatePost> createPostMono) {
         return createPostMono
                 .flatMapIterable(command -> {

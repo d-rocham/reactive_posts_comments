@@ -24,6 +24,7 @@ public class EditReactionUseCase extends UseCaseForCommand<EditReaction> {
         this.eventBus = eventBus;
     }
 
+    @Override
     public Flux<DomainEvent> apply(Mono<EditReaction> editReactionMono) {
         return editReactionMono
                 .flatMapMany(command -> eventRepository.findById(command.getPostID())

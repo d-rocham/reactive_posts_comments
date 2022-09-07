@@ -27,8 +27,14 @@ public class Post extends AggregateEvent<PostID> {
 
     public Post(PostID entityId, Author author, Title title) {
         super(entityId);
-        this.author = author;
-        this.title = title;
+        subscribe(new PostChange(this));
+        appendChange(new PostCreated(
+                title.value(),
+                author.value()
+        )).apply();
+
+        //this.author = author;
+        //this.title = title;
     }
 
     private Post(PostID postID) {

@@ -25,6 +25,7 @@ public class AddCommentUseCase extends UseCaseForCommand<AddComment> {
         this.eventBus = eventBus;
     }
 
+    @Override
     public Flux<DomainEvent> apply(Mono<AddComment> addCommentMono) {
         return addCommentMono
                 // Find parent post & rebuild its event list.

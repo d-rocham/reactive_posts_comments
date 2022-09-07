@@ -1,7 +1,12 @@
 package org.alpha.domain.commands;
 
 import co.com.sofka.domain.generic.Command;
+import lombok.Setter;
+import lombok.ToString;
 
+// TODO: Check if annotations below are actually necessary
+@Setter
+@ToString
 public class CreatePost extends Command {
 
     private String postID;

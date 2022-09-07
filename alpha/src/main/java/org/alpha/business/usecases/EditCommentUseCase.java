@@ -24,6 +24,7 @@ public class EditCommentUseCase extends UseCaseForCommand<EditComment> {
         this.eventBus = eventBus;
     }
 
+    @Override
     public Flux<DomainEvent> apply(Mono<EditComment> editCommentMono) {
         return editCommentMono
                 .flatMapMany(command -> eventRepository.findById(command.getPostID())
