@@ -1,0 +1,22 @@
+package org.alpha.domain.events;
+
+import co.com.sofka.domain.generic.DomainEvent;
+
+public class PostEdited extends DomainEvent {
+    private String id;
+    private String title;
+
+    public PostEdited(String id, String title) {
+        super("domain.postedited");
+        this.id = id;
+        this.title = title;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+}
