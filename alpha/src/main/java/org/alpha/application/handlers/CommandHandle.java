@@ -35,7 +35,7 @@ public class CommandHandle {
     @Bean
     public RouterFunction<ServerResponse> addComment(AddCommentUseCase addCommentUseCase) {
         return route(
-                POST("/addComment/")
+                POST("/addComment")
                         .and(accept(MediaType.APPLICATION_JSON)),
                 request -> ServerResponse
                         .ok().contentType(MediaType.APPLICATION_JSON)

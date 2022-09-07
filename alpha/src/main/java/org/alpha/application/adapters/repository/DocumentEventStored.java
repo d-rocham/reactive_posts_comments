@@ -5,7 +5,7 @@ import org.alpha.application.generic.models.StoredEvent;
 public class DocumentEventStored {
 
     private String id;
-    private String aggregateRoodId;
+    private String aggregateRootId;
     private StoredEvent storedEvent;
 
     public DocumentEventStored() {
@@ -21,11 +21,11 @@ public class DocumentEventStored {
     }
 
     public String getAggregateRoodId() {
-        return aggregateRoodId;
+        return aggregateRootId;
     }
 
-    public void setAggregateRoodId(String aggregateRoodId) {
-        this.aggregateRoodId = aggregateRoodId;
+    public void setAggregateRoodId(String aggregateRootId) {
+        this.aggregateRootId = aggregateRootId;
     }
 
     public StoredEvent getStoredEvent() {

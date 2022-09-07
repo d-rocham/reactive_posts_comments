@@ -32,9 +32,6 @@ public class Post extends AggregateEvent<PostID> {
                 title.value(),
                 author.value()
         )).apply();
-
-        //this.author = author;
-        //this.title = title;
     }
 
     private Post(PostID postID) {

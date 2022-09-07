@@ -2,7 +2,11 @@ package org.alpha.domain.commands;
 
 
 import co.com.sofka.domain.generic.Command;
+import lombok.Setter;
+import lombok.ToString;
 
+@Setter
+@ToString
 public class AddComment extends Command {
 
     private String postID;

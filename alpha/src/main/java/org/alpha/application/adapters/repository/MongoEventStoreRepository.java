@@ -26,7 +26,7 @@ public class MongoEventStoreRepository implements EventRepository {
 
     @Override
     public Flux<DomainEvent> findById(String aggregateId) {
-        Query findByIdQuery = new Query(Criteria
+        var findByIdQuery = new Query(Criteria
                 .where("aggregateRootId")
                 .is(aggregateId));
 

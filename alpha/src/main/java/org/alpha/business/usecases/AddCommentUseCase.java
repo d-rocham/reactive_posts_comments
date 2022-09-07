@@ -44,11 +44,14 @@ public class AddCommentUseCase extends UseCaseForCommand<AddComment> {
                             );
                             // Retrieve CommentAdded event from previous operation
                             return targetPost.getUncommittedChanges();
-                        }))
-                // Save event in DB, publish to RabbitMQ
-                .flatMap(newEvent -> eventRepository
-                        .saveEvent(newEvent)
-                        .thenReturn(newEvent))
-                .doOnNext(eventBus::publish);
+                        })
+                        // Save event in DB, publish to RabbitMQ
+                        .map(newEvent -> {
+                            eventBus.publish(newEvent);
+                            return newEvent;
+                        })
+                        .flatMap(eventRepository::saveEvent)
+                );
+
     }
 }
