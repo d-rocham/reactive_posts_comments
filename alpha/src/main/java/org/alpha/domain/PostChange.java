@@ -33,6 +33,7 @@ public class PostChange extends EventChange {
             );
 
             // Why do we access the property instead of using the Post.addComment() behaviour method?
+            // RE: Post.addComment() doesn't add comments to the list, it adds events.
             post.commentList.add(newComment);
         });
 
