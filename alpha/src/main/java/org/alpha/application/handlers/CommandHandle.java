@@ -10,8 +10,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
-import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
-import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
+import static org.springframework.web.reactive.function.server.RequestPredicates.*;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 @Configuration
@@ -50,7 +49,7 @@ public class CommandHandle {
     @Bean
     public RouterFunction<ServerResponse> addReaction(AddReactionUseCase addReactionUseCase) {
         return route(
-                POST("/addReaction/")
+                POST("/addReaction")
                         .and(accept(MediaType.APPLICATION_JSON)),
                 request -> ServerResponse
                         .ok().contentType(MediaType.APPLICATION_JSON)
@@ -65,7 +64,7 @@ public class CommandHandle {
     @Bean
     public RouterFunction<ServerResponse> editComment(EditCommentUseCase editCommentUseCase) {
         return route(
-                POST("/editComment/")
+                PATCH("/editComment")
                         .and(accept(MediaType.APPLICATION_JSON)),
                 request -> ServerResponse
                         .ok().contentType(MediaType.APPLICATION_JSON)
@@ -80,7 +79,7 @@ public class CommandHandle {
     @Bean
     public RouterFunction<ServerResponse> editPost(EditPostUseCase editPostUseCase) {
         return route(
-                POST("/editPost/")
+                PATCH("/editPost")
                         .and(accept(MediaType.APPLICATION_JSON)),
                 request -> ServerResponse
                         .ok().contentType(MediaType.APPLICATION_JSON)
@@ -95,7 +94,7 @@ public class CommandHandle {
     @Bean
     public RouterFunction<ServerResponse> editReaction(EditReactionUseCase editReactionUseCase) {
         return route(
-                POST("/editReaction/")
+                PATCH("/editReaction")
                         .and(accept(MediaType.APPLICATION_JSON)),
                 request -> ServerResponse
                         .ok().contentType(MediaType.APPLICATION_JSON)
