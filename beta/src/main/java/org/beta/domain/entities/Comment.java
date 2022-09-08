@@ -1,9 +1,9 @@
 package org.beta.domain.entities;
 
 import co.com.sofka.domain.generic.Entity;
-import org.alpha.domain.identifiers.CommentID;
-import org.alpha.domain.valueobjects.Author;
-import org.alpha.domain.valueobjects.Content;
+import org.beta.domain.identifiers.CommentID;
+import org.beta.domain.valueobjects.Author;
+import org.beta.domain.valueobjects.Content;
 
 import java.util.Objects;
 

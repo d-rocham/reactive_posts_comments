@@ -1,18 +1,20 @@
 package org.beta.domain;
 
 import co.com.sofka.domain.generic.EventChange;
-import org.alpha.domain.entities.Comment;
-import org.alpha.domain.entities.Reaction;
-import org.alpha.domain.events.*;
-import org.alpha.domain.identifiers.CommentID;
-import org.alpha.domain.identifiers.ReactionID;
-import org.alpha.domain.valueobjects.Author;
-import org.alpha.domain.valueobjects.Content;
-import org.alpha.domain.valueobjects.ReactionType;
-import org.alpha.domain.valueobjects.Title;
+import org.beta.domain.entities.Comment;
+import org.beta.domain.entities.Reaction;
+import org.beta.domain.events.*;
+import org.beta.domain.identifiers.CommentID;
+import org.beta.domain.identifiers.ReactionID;
+import org.beta.domain.valueobjects.Author;
+import org.beta.domain.valueobjects.Content;
+import org.beta.domain.valueobjects.ReactionType;
+import org.beta.domain.valueobjects.Title;
+import org.beta.domain.events.PostCreated;
 
 import java.lang.reflect.InaccessibleObjectException;
 import java.util.ArrayList;
+
 
 public class PostChange extends EventChange {
 
