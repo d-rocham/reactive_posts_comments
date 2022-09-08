@@ -5,7 +5,7 @@ import java.util.List;
 
 public class PostViewModel {
 
-    private String id;
+    // private String id;
 
     // Why does it need the aggregateId?
     private String aggregateId;
@@ -18,25 +18,28 @@ public class PostViewModel {
 
     private List<ReactionViewModel> reactions;
 
+    // TODO: What's the explanation for this constructor? Where is it used?
     public PostViewModel() {
         this.comments = new ArrayList<>();
         this.reactions = new ArrayList<>();
     }
 
-    public PostViewModel(String id, String aggregateId, String author, String title) {
-        this.id = id;
+    public PostViewModel(/*String id,*/ String aggregateId, String author, String title) {
+        // this.id = id;
         this.aggregateId = aggregateId;
         this.author = author;
         this.title = title;
+        this.comments = new ArrayList<>();
+        this.reactions = new ArrayList<>();
     }
 
-    public String getId() {
+    /* public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
-    }
+    } */
 
     public String getAggregateId() {
         return aggregateId;

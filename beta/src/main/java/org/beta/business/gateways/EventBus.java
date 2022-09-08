@@ -4,9 +4,14 @@ import co.com.sofka.domain.generic.DomainEvent;
 
 public interface EventBus {
 
-    // TODO: create publish method for eeach usecase
-
     void publish(DomainEvent event);
     void publishError(Throwable errorEvent);
+
+    void publishPost(DomainEvent postCreatedGenericEvent);
+
+    void publishComment(DomainEvent commentAddedGenericEvent);
+
+    // TODO: create & implement publish method for each usecase
+    void publishReaction(DomainEvent reactionAddedGenericEvent);
 
 }
