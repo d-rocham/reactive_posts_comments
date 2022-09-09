@@ -17,9 +17,6 @@ import reactor.core.publisher.Mono;
 @Component
 public class AddCommentUseCase extends UseCaseForCommand<AddComment> {
 
-    // Why don't we use dependency injection to use both repositories?
-    // Why does calling the methods in the interface works?
-    // Why don't we call MongoEventStoreRepository instead?
     private final EventRepository eventRepository;
     private final EventBus eventBus;
 

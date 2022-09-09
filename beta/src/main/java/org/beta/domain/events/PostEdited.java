@@ -7,7 +7,7 @@ public class PostEdited extends DomainEvent {
     private String title;
 
     public PostEdited(String id, String title) {
-        super("domain.postedited");
+        super("domain.postEdited");
         this.id = id;
         this.title = title;
     }

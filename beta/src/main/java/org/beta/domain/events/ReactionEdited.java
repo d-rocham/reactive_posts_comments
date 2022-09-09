@@ -7,7 +7,7 @@ public class ReactionEdited extends DomainEvent {
     private String reactionType;
 
     public ReactionEdited(String id, String reactionType) {
-        super("domain.reactionedited");
+        super("domain.reactionEdited");
         this.id = id;
         this.reactionType = reactionType;
     }

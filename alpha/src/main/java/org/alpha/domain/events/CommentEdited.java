@@ -7,7 +7,7 @@ public class CommentEdited extends DomainEvent {
     private String content;
 
     public CommentEdited(String id, String content) {
-        super("domain.commentedited");
+        super("domain.commentEdited");
         this.id = id;
         this.content = content;
     }
