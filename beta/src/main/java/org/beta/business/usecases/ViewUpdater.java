@@ -5,9 +5,7 @@ import org.beta.business.gateways.model.CommentViewModel;
 import org.beta.business.gateways.model.PostViewModel;
 import org.beta.business.gateways.model.ReactionViewModel;
 import org.beta.business.generic.DomainUpdater;
-import org.beta.domain.events.CommentAdded;
-import org.beta.domain.events.PostCreated;
-import org.beta.domain.events.ReactionAdded;
+import org.beta.domain.events.*;
 import org.springframework.stereotype.Service;
 
 
@@ -56,6 +54,34 @@ public class ViewUpdater extends DomainUpdater {
             viewRepository.saveNewReaction(newReaction).subscribe();
         });
 
-        // TODO: Add listeners for the remaining domainEvents
+        listen((PostEdited postEdited) -> {
+            PostViewModel editedPostModel = new PostViewModel(
+                    postEdited.aggregateRootId(),
+                    postEdited.getTitle()
+            );
+
+            viewRepository.editPost(editedPostModel);
+        });
+
+        listen((CommentEdited commentEdited) -> {
+            CommentViewModel editedCommentModel = new CommentViewModel(
+                    commentEdited.getId(),
+                    commentEdited.aggregateRootId(),
+                    commentEdited.getContent()
+            );
+
+            viewRepository.editComment(editedCommentModel);
+        });
+
+        listen((ReactionEdited reactionEdited) -> {
+            ReactionViewModel editedReactionModel = new ReactionViewModel(
+                    reactionEdited.getId(),
+                    reactionEdited.aggregateRootId(),
+                    reactionEdited.getReactionType()
+            );
+
+            viewRepository.editReaction(editedReactionModel);
+        });
+
     }
 }

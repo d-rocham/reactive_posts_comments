@@ -39,7 +39,7 @@ public class RabbitConfig {
     public TopicExchange getTopicExchange() {
         return new TopicExchange(EXCHANGE);
     }
-    
+
     @Bean
     public Binding BindingToPostCreatedQueue() {
         return BindingBuilder.bind(postCreatedQueue())

@@ -18,6 +18,12 @@ public class ReactionViewModel {
         this.reactionType = reactionType;
     }
 
+    public ReactionViewModel(String id, String postId, String reactionType) {
+        this.id = id;
+        this.postId = postId;
+        this.reactionType = reactionType;
+    }
+
     public String getId() {
         return id;
     }

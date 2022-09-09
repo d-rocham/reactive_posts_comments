@@ -18,6 +18,12 @@ public class CommentViewModel {
         this.content = content;
     }
 
+    public CommentViewModel(String id, String postId, String content) {
+        this.id = id;
+        this.postId = postId;
+        this.content = content;
+    }
+
     public String getId() {
         return id;
     }

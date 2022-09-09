@@ -33,6 +33,11 @@ public class PostViewModel {
         this.reactions = new ArrayList<>();
     }
 
+    public PostViewModel(String aggregateId, String title) {
+        this.aggregateId = aggregateId;
+        this.title = title;
+    }
+
     /* public String getId() {
         return id;
     }
