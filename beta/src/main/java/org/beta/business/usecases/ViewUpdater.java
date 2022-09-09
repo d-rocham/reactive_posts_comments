@@ -60,7 +60,7 @@ public class ViewUpdater extends DomainUpdater {
                     postEdited.getTitle()
             );
 
-            viewRepository.editPost(editedPostModel);
+            viewRepository.editPost(editedPostModel).subscribe();
         });
 
         listen((CommentEdited commentEdited) -> {
@@ -70,7 +70,7 @@ public class ViewUpdater extends DomainUpdater {
                     commentEdited.getContent()
             );
 
-            viewRepository.editComment(editedCommentModel);
+            viewRepository.editComment(editedCommentModel).subscribe();
         });
 
         listen((ReactionEdited reactionEdited) -> {
@@ -80,7 +80,7 @@ public class ViewUpdater extends DomainUpdater {
                     reactionEdited.getReactionType()
             );
 
-            viewRepository.editReaction(editedReactionModel);
+            viewRepository.editReaction(editedReactionModel).subscribe();
         });
 
     }
