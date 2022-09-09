@@ -39,9 +39,7 @@ public class RabbitConfig {
     public TopicExchange getTopicExchange() {
         return new TopicExchange(EXCHANGE);
     }
-
-    // TODO: What does binding in RabbitMQ's context mean?
-
+    
     @Bean
     public Binding BindingToPostCreatedQueue() {
         return BindingBuilder.bind(postCreatedQueue())

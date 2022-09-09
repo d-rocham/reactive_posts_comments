@@ -19,8 +19,6 @@ public interface ViewRepository {
 
     Mono<PostViewModel> saveNewReaction (ReactionViewModel newReaction);
 
-    // TODO: Implement below methods repository operations for editing entities
-
     Mono<PostViewModel> editPost(PostViewModel editedPost);
 
     Mono<PostViewModel> editComment(CommentViewModel editedComment);
