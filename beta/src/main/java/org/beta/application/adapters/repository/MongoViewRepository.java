@@ -1,5 +1,6 @@
 package org.beta.application.adapters.repository;
 
+import co.com.sofka.domain.generic.DomainEvent;
 import com.google.gson.Gson;
 import org.beta.business.gateways.ViewRepository;
 import org.beta.business.gateways.model.CommentViewModel;
@@ -14,6 +15,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Repository
 public class MongoViewRepository implements ViewRepository {
@@ -21,6 +24,14 @@ public class MongoViewRepository implements ViewRepository {
     private final ReactiveMongoTemplate reactiveMongoTemplate;
 
     private final Gson gson = new Gson();
+
+    /* TODO: Figure out why the wildcard below doesn't work
+    private static Query queryGenerator(<? extends DomainEvent> domainEvent) {
+        return new Query(Criteria
+                .where("aggregateID")
+                //.is(domainEvent.get...))
+    }
+    */
 
     public MongoViewRepository(ReactiveMongoTemplate reactiveMongoTemplate) {
         this.reactiveMongoTemplate = reactiveMongoTemplate;
@@ -95,16 +106,115 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Mono<PostViewModel> editPost(PostViewModel editedPost) {
-        return null;
+        // TODO: query below is repeated accross methods
+        // TODO: Create a fuction / to generate a query: it takes as an argument the domain event, returns query
+
+        Query query = new Query(Criteria
+                .where("aggregateId")
+                .is(editedPost.getAggregateId()));
+
+        Update update = new Update();
+
+        return reactiveMongoTemplate
+                .findOne(query, PostViewModel.class)
+                .flatMap(postViewModel -> {
+                    update.set("title", editedPost.getTitle());
+                    return reactiveMongoTemplate
+                            .findAndModify(query, update, PostViewModel.class);
+                });
     }
 
     @Override
     public Mono<PostViewModel> editComment(CommentViewModel editedComment) {
-        return null;
+        Query query = new Query(Criteria
+                .where("aggregateId")
+                .is(editedComment.getPostId()));
+
+        Update update = new Update();
+
+        return reactiveMongoTemplate
+                .findOne(query, PostViewModel.class)
+                .flatMap(postViewModel -> {
+                            List<CommentViewModel> comments = postViewModel.getComments();
+                               /*
+                                comments.forEach((comment) ->
+                                        Objects.equals(comment.getId(), editedComment.getId())
+                                            ? comment.setContent(editedComment.getContent())
+                                            : comment;
+                                );
+
+                                // Alternative: find index of target comment in `comments` list.
+                                // Use then `comments.set(index, new PostViewModel())
+                                // But I want to find a way where there's no need to create the whole CVM from scratch
+
+                                */
+
+                            CommentViewModel targetComment = comments.stream()
+                                    .filter(comment -> Objects.equals(
+                                            comment.getId(),
+                                            editedComment.getId()))
+                                    .collect(Collectors.toList())
+                                    .get(0);
+
+                            comments.set(
+                                    comments.indexOf(targetComment),
+                                    editedComment);
+
+                            update.set("comments", comments);
+
+                            return reactiveMongoTemplate
+                                    .findAndModify(query, update, PostViewModel.class);
+                        }
+                );
+
     }
 
     @Override
     public Mono<PostViewModel> editReaction(ReactionViewModel editedReaction) {
-        return null;
+        Query query = new Query(Criteria
+                .where("aggregateId")
+                .is(editedReaction.getPostId()));
+
+        Update update = new Update();
+
+        return reactiveMongoTemplate
+                .findOne(query, PostViewModel.class)
+                .flatMap(postViewModel -> {
+                            List<CommentViewModel> comments = postViewModel.getComments();
+                               /*
+                                comments.forEach((comment) ->
+                                        Objects.equals(comment.getId(), editedComment.getId())
+                                            ? comment.setContent(editedComment.getContent())
+                                            : comment;
+                                );
+
+                                // Alternative: find index of target comment in `comments` list.
+                                // Use then `comments.set(index, new PostViewModel())
+                                // But I want to find a way where there's no need to create the whole CVM from scratch
+
+                                */
+
+                            CommentViewModel targetComment = comments.stream()
+                                    .filter(comment -> Objects.equals(
+                                            comment.getId(),
+                                            editedComment.getId()))
+                                    .collect(Collectors.toList())
+                                    .get(0);
+
+                            comments.set(
+                                    comments.indexOf(targetComment),
+                                    editedComment);
+
+                            update.set("comments", comments);
+
+                            return reactiveMongoTemplate
+                                    .findAndModify(query, update, PostViewModel.class);
+                        }
+                );
+
+
+
+
+
     }
 }
