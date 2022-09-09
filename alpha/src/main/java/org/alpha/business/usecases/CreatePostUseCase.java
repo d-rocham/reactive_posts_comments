@@ -15,14 +15,6 @@ import reactor.core.publisher.Mono;
 
 @Component
 public class CreatePostUseCase extends UseCaseForCommand<CreatePost> {
-
-    /* Why don't we use dependency injection to use both repositories?
-    @Autowired
-    EventRepository eventRepository;
-
-    @Autowired
-    EventBus eventBus; */
-
     private final EventRepository eventRepository;
 
     private final EventBus eventBus;

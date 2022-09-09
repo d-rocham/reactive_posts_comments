@@ -12,6 +12,11 @@ public class DocumentEventStored {
 
     }
 
+    public DocumentEventStored(String aggregateRootId, StoredEvent storedEvent) {
+        this.aggregateRootId = aggregateRootId;
+        this.storedEvent = storedEvent;
+    }
+
     public String getId() {
         return id;
     }

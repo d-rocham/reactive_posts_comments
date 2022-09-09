@@ -16,7 +16,6 @@ public class Notification {
         this.instant = Instant.now();
     }
 
-    // What is this constructor used for?
     public Notification() {
         this(null, null);
     }

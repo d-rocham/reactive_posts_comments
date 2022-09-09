@@ -48,16 +48,13 @@ public class MongoEventStoreRepository implements EventRepository {
 
     @Override
     public Mono<DomainEvent> saveEvent(DomainEvent event) {
-        // TODO: Create constructor w. arguments for DES
-        // What is the difference between documentEventStored and StoredEvent?
-        DocumentEventStored documentEventStored = new DocumentEventStored();
-        documentEventStored.setAggregateRoodId(event.aggregateRootId());
-        documentEventStored.setStoredEvent(new StoredEvent(
-                gson.toJson(event),
-                new Date(),
-                // TODO: Lift below method to make it event method
-                event.getClass().getCanonicalName()
-        ));
+        DocumentEventStored documentEventStored = new DocumentEventStored(
+                event.aggregateRootId(),
+                new StoredEvent(
+                        gson.toJson(event),
+                        new Date(),
+                        event.getClass().getCanonicalName()
+                ));
 
         return reactiveMongoTemplate.save(documentEventStored)
                 .map(eventStored -> {
