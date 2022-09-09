@@ -101,9 +101,6 @@ public class MongoViewRepository implements ViewRepository {
                             .findAndModify(query, update, PostViewModel.class);
                 });
     }
-
-    // TODO: Implement secondary methods below.
-
     @Override
     public Mono<PostViewModel> editPost(PostViewModel editedPost) {
         // TODO: query below is repeated accross methods
@@ -180,41 +177,24 @@ public class MongoViewRepository implements ViewRepository {
         return reactiveMongoTemplate
                 .findOne(query, PostViewModel.class)
                 .flatMap(postViewModel -> {
-                            List<CommentViewModel> comments = postViewModel.getComments();
-                               /*
-                                comments.forEach((comment) ->
-                                        Objects.equals(comment.getId(), editedComment.getId())
-                                            ? comment.setContent(editedComment.getContent())
-                                            : comment;
-                                );
+                            List<ReactionViewModel> reactions = postViewModel.getReactions();
 
-                                // Alternative: find index of target comment in `comments` list.
-                                // Use then `comments.set(index, new PostViewModel())
-                                // But I want to find a way where there's no need to create the whole CVM from scratch
-
-                                */
-
-                            CommentViewModel targetComment = comments.stream()
-                                    .filter(comment -> Objects.equals(
-                                            comment.getId(),
-                                            editedComment.getId()))
+                            ReactionViewModel targetReaction = reactions.stream()
+                                    .filter(reaction -> Objects.equals(
+                                            reaction.getId(),
+                                            editedReaction.getId()))
                                     .collect(Collectors.toList())
                                     .get(0);
 
-                            comments.set(
-                                    comments.indexOf(targetComment),
-                                    editedComment);
+                            reactions.set(
+                                    reactions.indexOf(targetReaction),
+                                    editedReaction);
 
-                            update.set("comments", comments);
+                            update.set("reactions", reactions);
 
                             return reactiveMongoTemplate
                                     .findAndModify(query, update, PostViewModel.class);
                         }
                 );
-
-
-
-
-
     }
 }
