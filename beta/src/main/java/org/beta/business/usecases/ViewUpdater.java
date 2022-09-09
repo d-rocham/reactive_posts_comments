@@ -10,7 +10,6 @@ import org.beta.domain.events.PostCreated;
 import org.beta.domain.events.ReactionAdded;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 
 @Service
 public class ViewUpdater extends DomainUpdater {
@@ -26,12 +25,12 @@ public class ViewUpdater extends DomainUpdater {
 
         listen((PostCreated postCreated) -> {
             PostViewModel newPost = new PostViewModel(
-                    postCreated.aggregateParentId(),
+                    postCreated.aggregateRootId(),
                     postCreated.getAuthor(),
                     postCreated.getTitle()
             );
 
-            viewRepository.saveNewPost(newPost);
+            viewRepository.saveNewPost(newPost).subscribe();
         });
 
         listen((CommentAdded commentAdded) -> {
@@ -43,7 +42,7 @@ public class ViewUpdater extends DomainUpdater {
                     commentAdded.getContent()
             );
 
-            viewRepository.saveNewComment(newComment);
+            viewRepository.saveNewComment(newComment).subscribe();
         });
 
         listen((ReactionAdded reactionAdded) -> {
@@ -54,7 +53,7 @@ public class ViewUpdater extends DomainUpdater {
                     reactionAdded.getReactionType()
             );
 
-            viewRepository.saveNewReaction(newReaction);
+            viewRepository.saveNewReaction(newReaction).subscribe();
         });
 
         // TODO: Add listeners for the remaining domainEvents

@@ -13,10 +13,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitConfig {
     public static final String EXCHANGE = "core-posts";
+    public static final String GENERAL_QUEUE = "events.general";
 
     public static final String PROXY_QUEUE_POST_CREATED = "events.proxy.post.created";
     public static final String PROXY_QUEUE_COMMENT_ADDED = "events.proxy.comment.added";
-    public static final String GENERAL_QUEUE = "events.general";
 
     public static final String PROXY_ROUTING_KEY_POST_CREATED = "routingKey.proxy.post.created";
     public static final String PROXY_ROUTING_KEY_COMMENT_ADDED = "routingKey.proxy.comment.added";

@@ -95,9 +95,6 @@ public class MongoViewRepository implements ViewRepository {
     }
     @Override
     public Mono<PostViewModel> editPost(PostViewModel editedPost) {
-        // TODO: query below is repeated accross methods
-        // TODO: Create a fuction / to generate a query: it takes as an argument the domain event, returns query
-
         Query query = generateQuery(editedPost.getAggregateId());
 
         Update update = new Update();
