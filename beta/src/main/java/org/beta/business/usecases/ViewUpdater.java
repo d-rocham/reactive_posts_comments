@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 @Service
 public class ViewUpdater extends DomainUpdater {
-
     private final ViewRepository viewRepository;
 
     public ViewUpdater(ViewRepository viewRepository) {
