@@ -1,6 +1,5 @@
 package org.beta.application.adapters.repository;
 
-import co.com.sofka.domain.generic.DomainEvent;
 import com.google.gson.Gson;
 import org.beta.business.gateways.ViewRepository;
 import org.beta.business.gateways.model.CommentViewModel;
@@ -25,13 +24,12 @@ public class MongoViewRepository implements ViewRepository {
 
     private final Gson gson = new Gson();
 
-    /* TODO: Figure out why the wildcard below doesn't work
-    private static Query queryGenerator(<? extends DomainEvent> domainEvent) {
+    private static Query generateQuery(String targetValue) {
         return new Query(Criteria
-                .where("aggregateID")
-                //.is(domainEvent.get...))
+                .where("aggregateId")
+                .is(targetValue));
     }
-    */
+
 
     public MongoViewRepository(ReactiveMongoTemplate reactiveMongoTemplate) {
         this.reactiveMongoTemplate = reactiveMongoTemplate;
@@ -39,9 +37,7 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Mono<PostViewModel> findByAggregateId(String aggregateId) {
-        Query query = new Query(Criteria
-                .where("aggregateId")
-                .is(aggregateId));
+        Query query = generateQuery(aggregateId);
 
         return reactiveMongoTemplate
                 .findOne(query, PostViewModel.class);
@@ -61,9 +57,7 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Mono<PostViewModel> saveNewComment(CommentViewModel newComment) {
-        Query query = new Query(Criteria
-                .where("aggregateId")
-                .is(newComment.getPostId()));
+        Query query = generateQuery(newComment.getPostId());
 
         Update update = new Update();
 
@@ -84,9 +78,7 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Mono<PostViewModel> saveNewReaction(ReactionViewModel newReaction) {
-        Query query = new Query(Criteria
-                .where("aggregateId")
-                .is(newReaction.getPostId()));
+        Query query = generateQuery(newReaction.getPostId());
 
         Update update = new Update();
 
@@ -106,9 +98,7 @@ public class MongoViewRepository implements ViewRepository {
         // TODO: query below is repeated accross methods
         // TODO: Create a fuction / to generate a query: it takes as an argument the domain event, returns query
 
-        Query query = new Query(Criteria
-                .where("aggregateId")
-                .is(editedPost.getAggregateId()));
+        Query query = generateQuery(editedPost.getAggregateId());
 
         Update update = new Update();
 
@@ -123,9 +113,7 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Mono<PostViewModel> editComment(CommentViewModel editedComment) {
-        Query query = new Query(Criteria
-                .where("aggregateId")
-                .is(editedComment.getPostId()));
+        Query query = generateQuery(editedComment.getPostId());
 
         Update update = new Update();
 
