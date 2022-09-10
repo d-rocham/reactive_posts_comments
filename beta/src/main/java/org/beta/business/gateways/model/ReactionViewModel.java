@@ -1,5 +1,8 @@
 package org.beta.business.gateways.model;
 
+import org.beta.domain.events.ReactionAdded;
+import org.beta.domain.events.ReactionEdited;
+
 public class ReactionViewModel {
 
     private String id;
@@ -11,17 +14,34 @@ public class ReactionViewModel {
 
     }
 
-    public ReactionViewModel(String id, String postId, String author, String reactionType) {
+    private ReactionViewModel(String id, String postId, String author, String reactionType) {
         this.id = id;
         this.postId = postId;
         this.author = author;
         this.reactionType = reactionType;
     }
 
-    public ReactionViewModel(String id, String postId, String reactionType) {
+    private ReactionViewModel(String id, String postId, String reactionType) {
         this.id = id;
         this.postId = postId;
         this.reactionType = reactionType;
+    }
+
+    public static ReactionViewModel fromCreationEvent(ReactionAdded reactionAddedEvent) {
+        return new ReactionViewModel(
+                reactionAddedEvent.getId(),
+                reactionAddedEvent.aggregateRootId(),
+                reactionAddedEvent.getAuthor(),
+                reactionAddedEvent.getReactionType()
+        );
+    }
+
+    public static ReactionViewModel fromEditionEvent(ReactionEdited reactionEditedEvent) {
+        return new ReactionViewModel(
+                reactionEditedEvent.getId(),
+                reactionEditedEvent.aggregateRootId(),
+                reactionEditedEvent.getReactionType()
+        );
     }
 
     public String getId() {

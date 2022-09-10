@@ -1,5 +1,8 @@
 package org.beta.business.gateways.model;
 
+import org.beta.domain.events.CommentAdded;
+import org.beta.domain.events.CommentEdited;
+
 public class CommentViewModel {
 
     private String id;
@@ -11,17 +14,34 @@ public class CommentViewModel {
 
     }
 
-    public CommentViewModel(String id, String postId, String author, String content) {
+    private CommentViewModel(String id, String postId, String author, String content) {
         this.id = id;
         this.postId = postId;
         this.author = author;
         this.content = content;
     }
 
-    public CommentViewModel(String id, String postId, String content) {
+    private CommentViewModel(String id, String postId, String content) {
         this.id = id;
         this.postId = postId;
         this.content = content;
+    }
+
+    public static CommentViewModel fromCreationEvent(CommentAdded commentAddedEvent) {
+        return new CommentViewModel(
+                commentAddedEvent.getId(),
+                commentAddedEvent.aggregateRootId(),
+                commentAddedEvent.getAuthor(),
+                commentAddedEvent.getContent()
+        );
+    }
+
+    public static CommentViewModel fromEditionEvent(CommentEdited commentEditedEvent) {
+        return new CommentViewModel(
+                commentEditedEvent.getId(),
+                commentEditedEvent.aggregateRootId(),
+                commentEditedEvent.getContent()
+        );
     }
 
     public String getId() {

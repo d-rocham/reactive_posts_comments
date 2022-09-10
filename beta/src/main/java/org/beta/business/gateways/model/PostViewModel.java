@@ -1,5 +1,8 @@
 package org.beta.business.gateways.model;
 
+import org.beta.domain.events.PostCreated;
+import org.beta.domain.events.PostEdited;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,14 +21,12 @@ public class PostViewModel {
 
     private List<ReactionViewModel> reactions;
 
-    // TODO: What's the explanation for this constructor? Where is it used?
     public PostViewModel() {
         this.comments = new ArrayList<>();
         this.reactions = new ArrayList<>();
     }
 
-    public PostViewModel(/*String id,*/ String aggregateId, String author, String title) {
-        // this.id = id;
+    private PostViewModel(String aggregateId, String author, String title) {
         this.aggregateId = aggregateId;
         this.author = author;
         this.title = title;
@@ -33,18 +34,25 @@ public class PostViewModel {
         this.reactions = new ArrayList<>();
     }
 
-    public PostViewModel(String aggregateId, String title) {
+    private PostViewModel(String aggregateId, String title) {
         this.aggregateId = aggregateId;
         this.title = title;
     }
 
-    /* public String getId() {
-        return id;
+    public static PostViewModel fromCreationEvent(PostCreated postCreatedEvent) {
+        return new PostViewModel(
+                postCreatedEvent.aggregateRootId(),
+                postCreatedEvent.getAuthor(),
+                postCreatedEvent.getTitle()
+        );
     }
 
-    public void setId(String id) {
-        this.id = id;
-    } */
+    public static PostViewModel fromEditionEvent(PostEdited postEditedEvent) {
+        return new PostViewModel(
+                postEditedEvent.aggregateRootId(),
+                postEditedEvent.getTitle()
+        );
+    }
 
     public String getAggregateId() {
         return aggregateId;
