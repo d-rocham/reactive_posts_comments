@@ -7,6 +7,7 @@ import org.beta.business.gateways.EventBus;
 import org.beta.business.gateways.model.CommentViewModel;
 import org.beta.business.gateways.model.PostViewModel;
 import org.beta.business.gateways.model.ReactionViewModel;
+import org.beta.business.gateways.model.ViewModel;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
@@ -20,42 +21,42 @@ public class RabbitMqEventBus implements EventBus {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    @Override
-    public void publishPost(PostViewModel newPostModel) {
+    private void convertAndSendToTemplate(String routingKey, ViewModel viewModelToSend) {
         rabbitTemplate.convertAndSend(
                 RabbitConfig.EXCHANGE,
-                RabbitConfig.PROXY_ROUTING_KEY_POST_CREATED,
-                gson.toJson(newPostModel).getBytes()
+                routingKey,
+                gson.toJson(viewModelToSend).getBytes()
         );
+    }
+
+    @Override
+    public void publishPost(PostViewModel newPostModel) {
+        convertAndSendToTemplate(RabbitConfig.PROXY_ROUTING_KEY_POST_CREATED, newPostModel);
     }
 
     @Override
     public void publishComment(CommentViewModel newCommentModel) {
-        rabbitTemplate.convertAndSend(
-                RabbitConfig.EXCHANGE,
-                RabbitConfig.PROXY_ROUTING_KEY_COMMENT_ADDED,
-                gson.toJson(newCommentModel).getBytes()
-        );
+        convertAndSendToTemplate(RabbitConfig.PROXY_ROUTING_KEY_COMMENT_ADDED, newCommentModel);
     }
 
     @Override
     public void publishReaction(ReactionViewModel newReactionModel) {
-
+        convertAndSendToTemplate(RabbitConfig.PROXY_ROUTING_KEY_REACTION_ADDED, newReactionModel);
     }
 
     @Override
     public void publishPostEdition(PostViewModel editedPostModel) {
-
+        convertAndSendToTemplate(RabbitConfig.PROXY_ROUTING_KEY_POST_EDITED, editedPostModel);
     }
 
     @Override
     public void publishCommentEdition(CommentViewModel editedCommentModel) {
-
+        convertAndSendToTemplate(RabbitConfig.PROXY_QUEUE_COMMENT_EDITED, editedCommentModel);
     }
 
     @Override
-    public void publishReacctionEdition(ReactionViewModel editedReactionModel) {
-
+    public void publishReactionEdition(ReactionViewModel editedReactionModel) {
+        convertAndSendToTemplate(RabbitConfig.PROXY_ROUTING_KEY_REACTION_EDITED, editedReactionModel);
     }
 
     // Are the methods below used, or just examples to follow?
