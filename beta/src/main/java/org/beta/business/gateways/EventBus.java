@@ -3,6 +3,7 @@ package org.beta.business.gateways;
 import co.com.sofka.domain.generic.DomainEvent;
 import org.beta.business.gateways.model.CommentViewModel;
 import org.beta.business.gateways.model.PostViewModel;
+import org.beta.business.gateways.model.ReactionViewModel;
 
 public interface EventBus {
 
@@ -13,7 +14,12 @@ public interface EventBus {
 
     void publishComment(CommentViewModel newCommentModel);
 
-    // TODO: create & implement publish method for each usecase
-    void publishReaction(DomainEvent reactionAddedGenericEvent);
+    void publishReaction(ReactionViewModel newReactionModel);
+
+    void publishPostEdition(PostViewModel editedPostModel);
+
+    void publishCommentEdition(CommentViewModel editedCommentModel);
+
+    void publishReacctionEdition(ReactionViewModel editedReactionModel);
 
 }

@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import org.beta.business.gateways.EventBus;
 import org.beta.business.gateways.model.CommentViewModel;
 import org.beta.business.gateways.model.PostViewModel;
+import org.beta.business.gateways.model.ReactionViewModel;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +44,22 @@ public class RabbitMqEventBus implements EventBus {
     }
 
     @Override
-    public void publishReaction(DomainEvent reactionAddedGenericEvent) {
+    public void publishReaction(ReactionViewModel newReactionModel) {
+
+    }
+
+    @Override
+    public void publishPostEdition(PostViewModel editedPostModel) {
+
+    }
+
+    @Override
+    public void publishCommentEdition(CommentViewModel editedCommentModel) {
+
+    }
+
+    @Override
+    public void publishReacctionEdition(ReactionViewModel editedReactionModel) {
 
     }
 }
