@@ -20,6 +20,6 @@ public interface EventBus {
 
     void publishCommentEdition(CommentViewModel editedCommentModel);
 
-    void publishReacctionEdition(ReactionViewModel editedReactionModel);
+    void publishReactionEdition(ReactionViewModel editedReactionModel);
 
 }
