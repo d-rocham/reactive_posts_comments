@@ -21,67 +21,36 @@ public class ViewUpdater extends DomainUpdater {
         // Each event first creates a ViewModel for the event
         // Then stores the ViewModel in the repository
 
-        listen((PostCreated postCreated) -> {
-            PostViewModel newPost = new PostViewModel(
-                    postCreated.aggregateRootId(),
-                    postCreated.getAuthor(),
-                    postCreated.getTitle()
-            );
+        /* POST INTERACTIONS */
 
-            viewRepository.saveNewPost(newPost).subscribe();
-        });
+        listen((PostCreated postCreated) -> viewRepository
+                .saveNewPost(PostViewModel.fromCreationEvent(postCreated))
+                .subscribe());
 
-        listen((CommentAdded commentAdded) -> {
-            CommentViewModel newComment = new CommentViewModel(
-                    commentAdded.getId(),
-                    // What's the difference between PostID & AggregateRootID?
-                    commentAdded.aggregateRootId(),
-                    commentAdded.getAuthor(),
-                    commentAdded.getContent()
-            );
+        listen((PostEdited postEdited) -> viewRepository
+                .editPost(PostViewModel.fromEditionEvent(postEdited))
+                .subscribe());
 
-            viewRepository.saveNewComment(newComment).subscribe();
-        });
+        /* COMMENT INTERACTIONS */
 
-        listen((ReactionAdded reactionAdded) -> {
-            ReactionViewModel newReaction = new ReactionViewModel(
-                    reactionAdded.getId(),
-                    reactionAdded.aggregateRootId(),
-                    reactionAdded.getAuthor(),
-                    reactionAdded.getReactionType()
-            );
+        listen((CommentAdded commentAdded) -> viewRepository
+                .saveNewComment(CommentViewModel.fromCreationEvent(commentAdded))
+                .subscribe());
 
-            viewRepository.saveNewReaction(newReaction).subscribe();
-        });
+        listen((CommentEdited commentEdited) -> viewRepository
+                .editComment(CommentViewModel.fromEditionEvent(commentEdited))
+                .subscribe());
 
-        listen((PostEdited postEdited) -> {
-            PostViewModel editedPostModel = new PostViewModel(
-                    postEdited.aggregateRootId(),
-                    postEdited.getTitle()
-            );
+        /* REACTION INTERACTIONS */
 
-            viewRepository.editPost(editedPostModel).subscribe();
-        });
+        listen((ReactionAdded reactionAdded) -> viewRepository
+                .saveNewReaction(ReactionViewModel.fromCreationEvent(reactionAdded))
+                .subscribe());
 
-        listen((CommentEdited commentEdited) -> {
-            CommentViewModel editedCommentModel = new CommentViewModel(
-                    commentEdited.getId(),
-                    commentEdited.aggregateRootId(),
-                    commentEdited.getContent()
-            );
 
-            viewRepository.editComment(editedCommentModel).subscribe();
-        });
-
-        listen((ReactionEdited reactionEdited) -> {
-            ReactionViewModel editedReactionModel = new ReactionViewModel(
-                    reactionEdited.getId(),
-                    reactionEdited.aggregateRootId(),
-                    reactionEdited.getReactionType()
-            );
-
-            viewRepository.editReaction(editedReactionModel).subscribe();
-        });
+        listen((ReactionEdited reactionEdited) -> viewRepository
+                .editReaction(ReactionViewModel.fromEditionEvent(reactionEdited))
+                .subscribe());
 
     }
 }
