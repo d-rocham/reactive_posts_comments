@@ -6,11 +6,8 @@ import org.beta.domain.events.PostEdited;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostViewModel {
+public class PostViewModel extends ViewModel{
 
-    // private String id;
-
-    // Why does it need the aggregateId?
     private String aggregateId;
 
     private String author;

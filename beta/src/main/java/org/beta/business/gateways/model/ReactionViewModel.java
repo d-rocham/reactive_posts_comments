@@ -3,7 +3,7 @@ package org.beta.business.gateways.model;
 import org.beta.domain.events.ReactionAdded;
 import org.beta.domain.events.ReactionEdited;
 
-public class ReactionViewModel {
+public class ReactionViewModel extends ViewModel{
 
     private String id;
     private String postId;

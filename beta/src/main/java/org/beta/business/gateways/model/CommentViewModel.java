@@ -3,7 +3,7 @@ package org.beta.business.gateways.model;
 import org.beta.domain.events.CommentAdded;
 import org.beta.domain.events.CommentEdited;
 
-public class CommentViewModel {
+public class CommentViewModel extends ViewModel{
 
     private String id;
     private String postId;
