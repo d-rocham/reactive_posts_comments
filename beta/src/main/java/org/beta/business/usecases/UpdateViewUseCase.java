@@ -9,18 +9,24 @@ import java.util.function.Consumer;
 @Service
 public class UpdateViewUseCase implements Consumer<DomainEvent> {
 
-    private final EventBus bus;
+    //private final EventBus bus;
     private final ViewUpdater viewUpdater;
 
-    public UpdateViewUseCase(EventBus bus, ViewUpdater viewUpdater) {
-        this.bus = bus;
+    private final BusPublisher busPublisher;
+
+    public UpdateViewUseCase(/*EventBus bus,*/ ViewUpdater viewUpdater, BusPublisher busPublisher) {
+        // this.bus = bus;
         this.viewUpdater = viewUpdater;
+        this.busPublisher = busPublisher;
     }
 
     @Override
     public void accept(DomainEvent event) {
-        bus.publish(event);
+        // TODO: below line would be BusPublisher.applyEvent(event) instead of bus.publish()
+
+        // bus.publish(event);
         viewUpdater.applyEvent(event);
+        busPublisher.applyEvent(event);
 
     }
 }

@@ -34,6 +34,7 @@ public class RabbitConfig {
         return new Queue(PROXY_QUEUE_COMMENT_ADDED);
     }
 
+    // TODO: create queue for reaction added & edited entities bind it as below
 
     @Bean
     public TopicExchange getTopicExchange() {

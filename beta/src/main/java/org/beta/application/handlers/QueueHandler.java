@@ -10,6 +10,7 @@ import java.util.function.Consumer;
 
 @Service
 public class QueueHandler implements Consumer<String> {
+    // TODO: learn how to turn the domain layer into an installable module
 
     private final Gson gson = new Gson();
     private final UpdateViewUseCase updateViewUseCase;
@@ -24,10 +25,8 @@ public class QueueHandler implements Consumer<String> {
         // Deserialize the incoming message into a notification
         Notification notification = gson.fromJson(jsonView, Notification.class);
         // Below operation could possibly be avoided if the Domain layer is turned into its own module
-        // TODO: learn how to turn the domain layer into an installable module
         String type = notification
                 .getType()
-                // Due to my own file structure, line below might trigger errors.
                 .replace("alpha", "beta");
 
         try {
