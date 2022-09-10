@@ -17,9 +17,6 @@ public class BusPublisher extends DomainUpdater {
         this.eventBus = eventBus;
 
         listen((PostCreated postCreated) -> eventBus
-                // Subscribe method not allowed for publishPost, as it's apparently not reactive
-                // Might cause bugs, the events might not get published to the queue.
-                // This might ruin my idea.
                 .publishPost(PostViewModel.fromCreationEvent(postCreated)));
 
         listen((CommentAdded commentAdded) -> eventBus
