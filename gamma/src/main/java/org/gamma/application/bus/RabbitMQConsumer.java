@@ -3,6 +3,7 @@ package org.gamma.application.bus;
 import com.google.gson.Gson;
 import org.gamma.application.bus.model.CommentModel;
 import org.gamma.application.bus.model.PostModel;
+import org.gamma.application.controller.SocketController;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +11,11 @@ import org.springframework.stereotype.Component;
 public class RabbitMQConsumer {
 
     private final Gson gson = new Gson();
+    private final SocketController socketController;
+
+    public RabbitMQConsumer(SocketController socketController) {
+        this.socketController = socketController;
+    }
 
     /*QUEUES TO LISTEN TO*/
     public static final String PROXY_QUEUE_POST_CREATED = "events.proxy.post.created";
@@ -24,12 +30,15 @@ public class RabbitMQConsumer {
     @RabbitListener(queues = PROXY_QUEUE_POST_CREATED)
     public void listenToPostCreation(String json) {
         PostModel newPost = gson.fromJson(json, PostModel.class);
+        socketController.submitPostCreated("mainSpace", newPost);
     }
 
     @RabbitListener(queues = PROXY_QUEUE_COMMENT_ADDED)
     public void listenToCommentCreation(String json) {
         CommentModel newComment = gson.fromJson(json, CommentModel.class);
+        socketController.submitCommentAdded(newComment.getPostId(), newComment);
     }
 
-
+    // TODO: add listener for remaining events. Check first if current application data flow
+    //  in front end is incompatible w. reactions & editions
 }

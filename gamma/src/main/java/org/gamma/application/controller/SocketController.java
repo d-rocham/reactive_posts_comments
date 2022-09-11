@@ -88,6 +88,4 @@ public class SocketController {
     }
 
     // TODO: Would the above logic change for entity edition or reaction adding?
-
-
 }
