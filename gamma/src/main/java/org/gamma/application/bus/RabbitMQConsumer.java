@@ -30,12 +30,14 @@ public class RabbitMQConsumer {
     @RabbitListener(queues = PROXY_QUEUE_POST_CREATED)
     public void listenToPostCreation(String json) {
         PostModel newPost = gson.fromJson(json, PostModel.class);
+        System.out.println(newPost.getTitle());
         socketController.submitPostCreated("mainSpace", newPost);
     }
 
     @RabbitListener(queues = PROXY_QUEUE_COMMENT_ADDED)
     public void listenToCommentCreation(String json) {
         CommentModel newComment = gson.fromJson(json, CommentModel.class);
+        System.out.println(newComment.getContent());
         socketController.submitCommentAdded(newComment.getPostId(), newComment);
     }
 

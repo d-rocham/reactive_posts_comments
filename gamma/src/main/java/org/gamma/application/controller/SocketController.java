@@ -77,13 +77,13 @@ public class SocketController {
 
     public void submitPostCreated(String correlationId, PostModel newPost) {
         if (Objects.nonNull(correlationId) && sessions.containsKey(correlationId)) {
-            broadcastJSON(correlationId, gson.toJson(newPost));
+            broadcastJSON(gson.toJson(newPost), correlationId);
         }
     }
 
     public void submitCommentAdded(String correlationId, CommentModel newComment) {
         if (Objects.nonNull(correlationId) && sessions.containsKey(correlationId)) {
-            broadcastJSON(correlationId, gson.toJson(newComment));
+            broadcastJSON(gson.toJson(newComment), correlationId);
         }
     }
 
