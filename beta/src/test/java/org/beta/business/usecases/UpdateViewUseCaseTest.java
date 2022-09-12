@@ -1,15 +1,12 @@
 package org.beta.business.usecases;
 
 import org.beta.application.adapters.repository.MongoViewRepository;
-import org.beta.application.handlers.QueueHandler;
 import org.beta.business.gateways.EventBus;
 import org.beta.business.gateways.model.CommentViewModel;
 import org.beta.business.gateways.model.PostViewModel;
 import org.beta.business.gateways.model.ReactionViewModel;
-import org.beta.domain.commands.EditComment;
 import org.beta.domain.events.*;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
