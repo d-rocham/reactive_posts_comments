@@ -1,1 +1,8 @@
-<p>post-view works!</p>
+<div class="homeView mx-1 flex flex-col justify-center gap-2 homeViewComponent">
+  <app-home-header></app-home-header>
+  <app-live-entity-container
+    [collection]="post.comments"
+    [viewSocket]="viewSocket"
+  ></app-live-entity-container>
+  <app-new-entity-form></app-new-entity-form>
+</div>

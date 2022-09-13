@@ -1,5 +1,8 @@
 <div class="homeView mx-1 flex flex-col justify-center gap-2 homeViewComponent">
   <app-home-header></app-home-header>
-  <app-live-entity-container [posts]="posts"></app-live-entity-container>
+  <app-live-entity-container
+    [collection]="sessionPosts"
+    [viewSocket]="viewSocket"
+  ></app-live-entity-container>
   <app-new-entity-form></app-new-entity-form>
 </div>
