@@ -1,7 +1,7 @@
 export interface Reaction {
-  id: String;
-  postId: String;
-  author: String;
+  id: string;
+  postId: string;
+  author: string;
   // TODO: Should below property be an enum?
-  reactionType: String;
+  reactionType: string;
 }

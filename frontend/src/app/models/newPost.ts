@@ -1,5 +1,5 @@
 export interface newPost {
-  postID: String;
-  title: String;
-  author: String;
+  postID: string;
+  title: string;
+  author: string;
 }

@@ -2,9 +2,9 @@ import { Comment } from './comment';
 import { Reaction } from './reaction';
 
 export interface Post {
-  aggregateId: String;
-  author: String;
-  title: String;
+  aggregateId: string;
+  author: string;
+  title: string;
   comments: Comment[];
   reactions: Reaction[];
 }
