@@ -6,5 +6,5 @@ export interface Post {
   author: String;
   title: String;
   comments: Comment[];
-  reaction: Reaction[];
+  reactions: Reaction[];
 }

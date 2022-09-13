@@ -11,6 +11,7 @@ import { NewEntityLoginPromptComponent } from './components/new-entity-login-pro
 import { EntityContainerComponent } from './components/entity-container/entity-container.component';
 import { ReactionContainerComponent } from './components/reaction-container/reaction-container.component';
 import { ReactionEntityComponent } from './components/reaction-entity/reaction-entity.component';
+import { HomeHeaderComponent } from './components/home-header/home-header.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ReactionEntityComponent } from './components/reaction-entity/reaction-e
     NewEntityLoginPromptComponent,
     EntityContainerComponent,
     ReactionContainerComponent,
-    ReactionEntityComponent
+    ReactionEntityComponent,
+    HomeHeaderComponent
   ],
   imports: [
     BrowserModule,

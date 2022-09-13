@@ -1,1 +1,14 @@
-<p>entity-container works!</p>
+<div class="flex flex-row items-center px-2 entityContainer">
+  <div class="flex flex-col grow entityContentContainer">
+    <p class="text-xl">
+      <span class="font-semibold">Title: </span>{{ post?.title }}
+    </p>
+    <p class="text-xl">
+      <span class="font-light italic">by </span>{{ post?.author }}
+    </p>
+  </div>
+  <div class="flex flex-col gap-1 entityButtonsContainer">
+    <button class="btn btn-sm btn-primary">Enter</button>
+    <button class="btn btn-sm btn-primary">Edit</button>
+  </div>
+</div>
