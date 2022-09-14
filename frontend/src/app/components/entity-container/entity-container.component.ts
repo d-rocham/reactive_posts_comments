@@ -28,5 +28,9 @@ export class EntityContainerComponent implements OnInit {
     return this.isPostP() ? 'Title: ' : 'Content: ';
   }
 
+  getEntityContent(): string {
+    return this.isPostP() ? this.entity.title : this.entity.content;
+  }
+
   ngOnInit(): void {}
 }

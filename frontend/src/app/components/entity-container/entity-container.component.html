@@ -2,7 +2,7 @@
   <div class="flex flex-col grow entityContentContainer">
     <p class="text-xl">
       <span class="font-semibold">{{ getEntityProperty() }} </span
-      >{{ entity?.title }}
+      >{{ getEntityContent() }}
     </p>
     <p class="text-xl">
       <span class="font-light italic">by </span>{{ entity?.author }}
@@ -12,7 +12,7 @@
     <button
       (click)="disconectSocket()"
       class="btn btn-sm btn-primary"
-      routerLink="/post/{{ entity?.aggregateId }}"
+      routerLink="/postView/{{ entity?.aggregateId }}"
     >
       Enter
     </button>

@@ -18,7 +18,6 @@ export class PostViewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private requestService: WebRequestsService,
-    private location: Location,
     private socketService: WebSocketService
   ) {}
 
@@ -27,7 +26,8 @@ export class PostViewComponent implements OnInit {
   }
 
   getPost() {
-    const targetId: string | null = this.route.snapshot.paramMap.get('id');
+    const targetId: string | null = this.route.snapshot.paramMap.get('postId');
+    console.log(targetId);
 
     if (targetId) {
       this.requestService.getPostById(targetId).subscribe((foundPost) => {

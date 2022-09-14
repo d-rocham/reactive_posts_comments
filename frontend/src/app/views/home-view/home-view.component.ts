@@ -15,7 +15,7 @@ export class HomeViewComponent implements OnInit {
   sessionPosts: Post[] = [];
 
   constructor(
-    private socket: WebSocketService,
+    private socketService: WebSocketService,
     private requestService: WebRequestsService
   ) {}
 
@@ -30,17 +30,25 @@ export class HomeViewComponent implements OnInit {
     this.sessionPosts.unshift(post);
   }
 
+  /**
+   * Requests a new `WebSocketSubject` from the `WebSocketService`,
+   * then subscribes to it in order to listen to new incoming posts.
+   */
   connectToSocket() {
-    this.viewSocket = this.socket.mainViewSocket();
+    this.viewSocket = this.socketService.mainViewSocket();
+
     this.viewSocket.subscribe((post) => {
       this.addPost(post);
     });
   }
 
+  /**
+   * Regular HTTP GET request to fetch all posts that
+   * weren't created on the current session.
+   */
   getPosts() {
     this.requestService.getAllPosts().subscribe((incomingPosts) => {
       this.sessionPosts = incomingPosts;
-      console.log(this.sessionPosts);
     });
   }
 }

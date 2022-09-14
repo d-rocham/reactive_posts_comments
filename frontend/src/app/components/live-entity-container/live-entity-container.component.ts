@@ -1,5 +1,5 @@
 import { Post } from 'src/app/models/post';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { WebSocketSubject } from 'rxjs/webSocket';
 
 @Component({
@@ -16,6 +16,10 @@ export class LiveEntityContainerComponent implements OnInit {
 
   constructor() {}
 
+  /**
+   * Predicate. Checks whether the collection is emtpy.
+   * @returns boolean
+   */
   isCollectionEmptyP(): boolean {
     return this.collection?.length > 0;
   }
