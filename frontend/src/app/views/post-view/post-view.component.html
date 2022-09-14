@@ -3,6 +3,7 @@
   <app-live-entity-container
     [collection]="post.comments"
     [viewSocket]="viewSocket"
+    [collectionType]="'comments'"
   ></app-live-entity-container>
-  <app-new-entity-form></app-new-entity-form>
+  <app-new-entity-form [newType]="'comment'"></app-new-entity-form>
 </div>

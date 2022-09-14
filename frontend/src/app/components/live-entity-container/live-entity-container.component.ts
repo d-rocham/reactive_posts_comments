@@ -14,6 +14,9 @@ export class LiveEntityContainerComponent implements OnInit {
   @Input()
   viewSocket!: any;
 
+  @Input()
+  collectionType!: string;
+
   constructor() {}
 
   /**

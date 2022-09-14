@@ -3,6 +3,7 @@
   <app-live-entity-container
     [collection]="sessionPosts"
     [viewSocket]="viewSocket"
+    [collectionType]="'posts'"
   ></app-live-entity-container>
-  <app-new-entity-form></app-new-entity-form>
+  <app-new-entity-form [newType]="'post'"></app-new-entity-form>
 </div>
