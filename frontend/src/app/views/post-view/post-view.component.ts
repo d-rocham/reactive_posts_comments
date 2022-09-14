@@ -27,7 +27,6 @@ export class PostViewComponent implements OnInit {
 
   getPost() {
     const targetId: string | null = this.route.snapshot.paramMap.get('postId');
-    console.log(targetId);
 
     if (targetId) {
       this.requestService.getPostById(targetId).subscribe((foundPost) => {

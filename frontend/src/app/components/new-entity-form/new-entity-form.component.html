@@ -5,20 +5,22 @@
       <input
         type="text"
         name="title"
-        id=""
+        id="entityFormContent"
         class="input input-sm"
         placeholder="Title"
       />
       <input
         type="text"
         name="author"
-        id=""
+        id="entityFormAuthor"
         class="input input-sm"
         placeholder="Author"
       />
     </div>
     <div>
-      <button type="submit" class="btn btn-secondary w-20">Send</button>
+      <button class="btn btn-secondary w-20" (click)="createNewEntity()">
+        Send
+      </button>
     </div>
   </div>
 </div>

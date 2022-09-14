@@ -19,8 +19,6 @@ export class HomeViewComponent implements OnInit {
     private requestService: WebRequestsService
   ) {}
 
-  // TODO: Add create post functionality
-
   ngOnInit(): void {
     this.getPosts();
     this.connectToSocket();

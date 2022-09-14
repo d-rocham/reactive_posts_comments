@@ -1,4 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { WebRequestsService } from 'src/app/services/web-requests.service';
+import { newPost } from 'src/app/models/newPost';
+import { Comment } from 'src/app/models/comment';
+import { ActivatedRoute } from '@angular/router';
+import { ThisReceiver } from '@angular/compiler';
 
 @Component({
   selector: 'app-new-entity-form',
@@ -9,7 +14,45 @@ export class NewEntityFormComponent implements OnInit {
   @Input()
   newType!: string;
 
-  constructor() {}
+  createNew(): any {}
+
+  constructor(
+    private requestService: WebRequestsService,
+    private route: ActivatedRoute
+  ) {}
+
+  generateId(): string {
+    return (Math.random() * (10000000 - 100000) + 100000).toString();
+  }
+
+  createNewEntity(): void {
+    const newEntity: any =
+      this.newType === 'post'
+        ? {
+            postID: this.generateId(),
+            // TODO: Bad, temporary implementation. Change access to form data below
+            title: (
+              document.querySelector('#entityFormContent') as HTMLInputElement
+            ).value,
+            author: (
+              document.querySelector('#entityFormAuthor') as HTMLInputElement
+            ).value,
+          }
+        : {
+            commentID: this.generateId(),
+            postID: this.route.snapshot.paramMap.get('postId'),
+            author: (
+              document.querySelector('#entityFormAuthor') as HTMLInputElement
+            ).value,
+            content: (
+              document.querySelector('#entityFormContent') as HTMLInputElement
+            ).value,
+          };
+
+    this.newType === 'post'
+      ? this.requestService.createPost(newEntity).subscribe()
+      : this.requestService.createComment(newEntity).subscribe();
+  }
 
   ngOnInit(): void {}
 }
