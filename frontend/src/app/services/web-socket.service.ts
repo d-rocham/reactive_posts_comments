@@ -10,7 +10,9 @@ export class WebSocketService {
   constructor() {}
 
   mainViewSocket(): WebSocketSubject<Post> {
-    return webSocket('ws://localhost:8082/retrieve/mainSpace');
+    return webSocket(
+      'wss://gamma-microservice.herokuapp.com/retrieve/mainSpace'
+    );
   }
 
   /**
@@ -18,6 +20,8 @@ export class WebSocketService {
    * @returns `WebSocketSubject` connection to interact with the requested post session.
    */
   postViewSocket(targetPostId: string): WebSocketSubject<Comment> {
-    return webSocket(`ws://localhost:8082/retrieve/${targetPostId}`);
+    return webSocket(
+      `wss://gamma-microservice.herokuapp.com/retrieve/${targetPostId}`
+    );
   }
 }

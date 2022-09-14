@@ -9,13 +9,14 @@ import { newPost } from '../models/newPost';
 })
 export class WebRequestsService {
   // URL constants
-  private CREATEPOSTURL = 'http://localhost:8080/createPost';
-  private CREATECOMMENTURL = 'http://localhost:8080/addComment';
+  private CREATEPOSTURL = 'https://alpha-microservice.herokuapp.com/createPost';
+  private CREATECOMMENTURL =
+    'https://alpha-microservice.herokuapp.com/addComment';
 
   // TODO: add url for reaction, remaining crud operations
 
-  private GETPOSTBYID = 'http://localhost:8081/getPost/';
-  private GETALLPOSTS = 'http://localhost:8081/getAllPosts';
+  private GETPOSTBYID = 'https://beta-microservice.herokuapp.com/getPost/';
+  private GETALLPOSTS = 'https://beta-microservice.herokuapp.com/getAllPosts';
 
   constructor(private httpClient: HttpClient) {}
 
