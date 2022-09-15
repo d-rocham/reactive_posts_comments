@@ -29,12 +29,13 @@ public class SecurityConfig {
 
         return httpSecurity.csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)
+                .cors().configurationSource(corsConfigurationSource).and()
                 .authenticationManager(reactiveAuthenticationManager)
                 .securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
                 .authorizeExchange( access -> access
                         .pathMatchers(CREATE_POST).hasAuthority("ROLE_USER")
-                        //.pathMatchers(CREATE_USERS).hasAuthority("ROLE_ADMIN")
-                        .pathMatchers(CREATE_COMMENT).hasAuthority("ROLE_USER*")
+                        .pathMatchers(CREATE_USERS).hasAuthority("ROLE_ADMIN")
+                        .pathMatchers(CREATE_COMMENT).hasAuthority("ROLE_USER")
                         .anyExchange().permitAll()
                 ).addFilterAt(new JwtTokenAuthenticationFilter(tokenProvider), SecurityWebFiltersOrder.HTTP_BASIC)
                 .build();

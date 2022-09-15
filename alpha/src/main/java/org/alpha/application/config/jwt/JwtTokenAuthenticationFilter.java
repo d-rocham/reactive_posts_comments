@@ -32,7 +32,7 @@ public class JwtTokenAuthenticationFilter implements WebFilter {
 
     private String resolveToken(ServerHttpRequest request){
         //1. Get the header that has the token
-        var bearerToken=request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION); //Bearer jfhkjdsgfkjsdgfkjsgdfgsjkfgsjkdg
+        var bearerToken=request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         //2.
         return StringUtils.hasText(bearerToken) && bearerToken.startsWith(HEADER_PREFIX) ?
                 bearerToken.substring(7) : null;
