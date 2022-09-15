@@ -13,6 +13,9 @@ import { EntityContainerComponent } from './components/entity-container/entity-c
 import { ReactionContainerComponent } from './components/reaction-container/reaction-container.component';
 import { ReactionEntityComponent } from './components/reaction-entity/reaction-entity.component';
 import { HomeHeaderComponent } from './components/home-header/home-header.component';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideAuth, getAuth } from '@angular/fire/auth';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,13 @@ import { HomeHeaderComponent } from './components/home-header/home-header.compon
     ReactionEntityComponent,
     HomeHeaderComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
