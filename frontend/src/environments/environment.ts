@@ -6,13 +6,24 @@ export const environment = {
   firebase: {
     projectId: 'front-reactive-posts-comments',
     appId: '1:974782625546:web:d64fb7c97e8b6a18d56cf3',
-    databaseURL: 'https://front-reactive-posts-comments-default-rtdb.firebaseio.com',
+    databaseURL:
+      'https://front-reactive-posts-comments-default-rtdb.firebaseio.com',
     storageBucket: 'front-reactive-posts-comments.appspot.com',
     apiKey: 'AIzaSyAQ4cElqLvB3qBTzw9V1kf2i5I6WslqlJI',
     authDomain: 'front-reactive-posts-comments.firebaseapp.com',
     messagingSenderId: '974782625546',
   },
-  production: false
+  production: false,
+  firebaseConfig: {
+    apiKey: 'AIzaSyAQ4cElqLvB3qBTzw9V1kf2i5I6WslqlJI',
+    authDomain: 'front-reactive-posts-comments.firebaseapp.com',
+    databaseURL:
+      'https://front-reactive-posts-comments-default-rtdb.firebaseio.com',
+    projectId: 'front-reactive-posts-comments',
+    storageBucket: 'front-reactive-posts-comments.appspot.com',
+    messagingSenderId: '974782625546',
+    appId: '1:974782625546:web:d64fb7c97e8b6a18d56cf3',
+  },
 };
 
 /*

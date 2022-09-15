@@ -15,12 +15,14 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.context.NoOpServerSecurityContextRepository;
+import org.springframework.web.cors.reactive.CorsConfigurationSource;
 
 @EnableWebFluxSecurity
 public class SecurityConfig {
     @Bean
     SecurityWebFilterChain springSecurityAccess(ServerHttpSecurity httpSecurity,
                                                 JwtTokenProvider tokenProvider,
+                                                CorsConfigurationSource corsConfigurationSource,
                                                 ReactiveAuthenticationManager reactiveAuthenticationManager) {
         //Define as constants the endpoints that you have
         final String CREATE_POST = "/createPost";
