@@ -1,6 +1,7 @@
 package org.alpha.application.handlers;
 
 import co.com.sofka.domain.generic.DomainEvent;
+import lombok.extern.slf4j.Slf4j;
 import org.alpha.business.usecases.*;
 import org.alpha.domain.commands.*;
 import org.springframework.context.annotation.Bean;
@@ -13,21 +14,36 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import static org.springframework.web.reactive.function.server.RequestPredicates.*;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
+@Slf4j
 @Configuration
 public class CommandHandle {
 
     @Bean
     public RouterFunction<ServerResponse> createPost(CreatePostUseCase createPostUseCase) {
         return route(
-                POST("/createPost")
-                        .and(accept(MediaType.APPLICATION_JSON)),
-                request -> ServerResponse
+                POST("/createPost").and(accept(MediaType.APPLICATION_JSON)),
+                request -> createPostUseCase.apply(request.bodyToMono(CreatePost.class))
+                        .collectList()
+                        .flatMap(domainEvents -> {
+                            log.info("Post created ");
+                            return ServerResponse.ok().
+                                    contentType(MediaType.APPLICATION_JSON)
+                                    .bodyValue(domainEvents);
+                                }
+
+                        )
+                        .onErrorResume(error -> {
+                            log.error(error.getMessage());
+                            return ServerResponse.badRequest().build();
+                        })
+
+                        /*ServerResponse
                         .ok().contentType(MediaType.APPLICATION_JSON)
                         .body(BodyInserters.fromPublisher(
                                 createPostUseCase.apply(
                                         request.bodyToMono(CreatePost.class)),
                                 DomainEvent.class
-                        ))
+                        )) */
         );
     }
 
@@ -36,13 +52,25 @@ public class CommandHandle {
         return route(
                 POST("/addComment")
                         .and(accept(MediaType.APPLICATION_JSON)),
-                request -> ServerResponse
+                request -> addCommentUseCase.apply(request.bodyToMono(AddComment.class))
+                        .collectList()
+                        .flatMap(domainEvents -> {
+                            log.info("Comment added");
+                            return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).bodyValue(domainEvents);
+                        })
+                        .onErrorResume(error -> {
+                            log.error(error.getMessage() + "You missed a key, or the resource was not found");
+                            return ServerResponse.badRequest().build();
+                        })
+
+
+                        /*ServerResponse
                         .ok().contentType(MediaType.APPLICATION_JSON)
                         .body(BodyInserters.fromPublisher(
                                 addCommentUseCase.apply(
                                         request.bodyToMono(AddComment.class)),
                                 DomainEvent.class
-                        ))
+                        )) */
         );
     }
 
