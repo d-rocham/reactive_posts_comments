@@ -2,6 +2,7 @@ package org.beta.application.adapters.bus;
 
 import co.com.sofka.domain.generic.DomainEvent;
 import com.google.gson.Gson;
+import lombok.extern.slf4j.Slf4j;
 import org.beta.application.config.RabbitConfig;
 import org.beta.business.gateways.EventBus;
 import org.beta.business.gateways.model.CommentViewModel;
@@ -11,6 +12,7 @@ import org.beta.business.gateways.model.ViewModel;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class RabbitMqEventBus implements EventBus {
 
@@ -31,12 +33,14 @@ public class RabbitMqEventBus implements EventBus {
 
     @Override
     public void publishPost(PostViewModel newPostModel) {
+        log.info(String.format("Sent %s new post to queue.", newPostModel.getAggregateId()));
         convertAndSendToTemplate(RabbitConfig.PROXY_ROUTING_KEY_POST_CREATED, newPostModel);
     }
 
     @Override
     public void publishComment(CommentViewModel newCommentModel) {
         convertAndSendToTemplate(RabbitConfig.PROXY_ROUTING_KEY_COMMENT_ADDED, newCommentModel);
+        log.info(String.format("Sent %s new comment to queue.", newCommentModel.getId()));
     }
 
     @Override

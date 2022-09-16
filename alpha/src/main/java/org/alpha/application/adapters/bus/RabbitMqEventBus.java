@@ -1,5 +1,6 @@
 package org.alpha.application.adapters.bus;
 
+import lombok.extern.slf4j.Slf4j;
 import org.alpha.application.config.RabbitConfig;
 import org.alpha.business.gateways.EventBus;
 import co.com.sofka.domain.generic.DomainEvent;
@@ -7,6 +8,7 @@ import com.google.gson.Gson;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class RabbitMqEventBus implements EventBus {
 
@@ -24,12 +26,13 @@ public class RabbitMqEventBus implements EventBus {
                 gson.toJson(event)
         );
 
+        log.info(String.format("%s event sent to exchange", notification.getType()));
+        
         rabbitTemplate.convertAndSend(
                 RabbitConfig.EXCHANGE,
                 RabbitConfig.GENERAL_ROUTING_KEY,
                 notification.serialize().getBytes()
         );
-
     }
 
     @Override

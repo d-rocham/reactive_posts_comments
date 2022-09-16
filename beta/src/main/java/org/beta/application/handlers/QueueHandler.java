@@ -2,12 +2,14 @@ package org.beta.application.handlers;
 
 import co.com.sofka.domain.generic.DomainEvent;
 import com.google.gson.Gson;
+import lombok.extern.slf4j.Slf4j;
 import org.beta.application.adapters.bus.Notification;
 import org.beta.business.usecases.UpdateViewUseCase;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Consumer;
 
+@Slf4j
 @Service
 public class QueueHandler implements Consumer<String> {
     // TODO: learn how to turn the domain layer into an installable module
@@ -40,6 +42,7 @@ public class QueueHandler implements Consumer<String> {
                     Class.forName(type));
 
             // Should the notification fit with the DomainEvent type, activate the updateViewUseCase
+            log.info(String.format("Received %s notification", notification.getType()));
             updateViewUseCase.accept(receivedEvent);
         } catch (ClassNotFoundException exception) {
             exception.printStackTrace();
