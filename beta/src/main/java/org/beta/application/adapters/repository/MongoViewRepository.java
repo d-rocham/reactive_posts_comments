@@ -1,6 +1,7 @@
 package org.beta.application.adapters.repository;
 
 import com.google.gson.Gson;
+import lombok.extern.slf4j.Slf4j;
 import org.beta.business.gateways.ViewRepository;
 import org.beta.business.gateways.model.CommentViewModel;
 import org.beta.business.gateways.model.PostViewModel;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Repository
 public class MongoViewRepository implements ViewRepository {
 
@@ -30,6 +32,14 @@ public class MongoViewRepository implements ViewRepository {
                 .is(targetValue));
     }
 
+    private static void logError(Throwable error) {
+        log.error(error.getMessage());
+    }
+
+    private static void logSuccessfulOperation(String successMessage) {
+        log.info(successMessage);
+    }
+
 
     public MongoViewRepository(ReactiveMongoTemplate reactiveMongoTemplate) {
         this.reactiveMongoTemplate = reactiveMongoTemplate;
@@ -40,19 +50,27 @@ public class MongoViewRepository implements ViewRepository {
         Query query = generateQuery(aggregateId);
 
         return reactiveMongoTemplate
-                .findOne(query, PostViewModel.class);
+                .findOne(query, PostViewModel.class)
+                .switchIfEmpty(Mono.error(new IllegalAccessException("Resource with requested id was not found")))
+                .doOnError(error -> logError(error))
+                .doOnSuccess(e -> logSuccessfulOperation("Resource fetched successfully"));
+
     }
 
     @Override
     public Flux<PostViewModel> findAllPosts() {
         return reactiveMongoTemplate
-                .findAll(PostViewModel.class);
+                .findAll(PostViewModel.class)
+                .doOnComplete(() -> logSuccessfulOperation("Resources fetched from database."))
+                .doOnError(MongoViewRepository::logError);
     }
 
     @Override
     public Mono<PostViewModel> saveNewPost(PostViewModel newPost) {
         return reactiveMongoTemplate
-                .save(newPost);
+                .save(newPost)
+                .doOnError(MongoViewRepository::logError)
+                .doOnSuccess(e -> logSuccessfulOperation(String.format("Resource %s created successfully", e.getAggregateId())));
     }
 
     @Override
@@ -64,6 +82,8 @@ public class MongoViewRepository implements ViewRepository {
         return reactiveMongoTemplate
                 // Find parent post
                 .findOne(query, PostViewModel.class)
+                .switchIfEmpty(Mono.error(new IllegalAccessException("Resource with requested id was not found")))
+                .doOnError(error -> logError(error))
                 .flatMap(postViewModel -> {
                     // Modify the comment list in server
                     List<CommentViewModel> updatedCommentList = postViewModel.getComments();
@@ -73,7 +93,8 @@ public class MongoViewRepository implements ViewRepository {
                     // Send the modification instructions to Mongo
                     return reactiveMongoTemplate
                             .findAndModify(query, update, PostViewModel.class);
-                });
+                })
+                .doOnSuccess(e -> logSuccessfulOperation(String.format("Comment successfully added to resource %s", e.getAggregateId())));
     }
 
     @Override

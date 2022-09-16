@@ -8,6 +8,7 @@ import reactor.core.publisher.Mono;
 
 public interface ViewRepository {
 
+
     Mono<PostViewModel> findByAggregateId(String aggregateId);
 
     Flux<PostViewModel> findAllPosts();
