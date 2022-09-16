@@ -1,5 +1,13 @@
-<app-home-header></app-home-header>
-<div class="flex flex-col items-center justify-center">
-  <p class="italic text-2xl pb-8">Want to join the conversation?</p>
-  <button class="btn" (click)="loginWithGoogle()">LOG IN WITH GOOGLE!</button>
+<div class="flex flex-col justify-center items-center">
+  <div class="absolute top-1/2 -translate-y-1/2">
+    <div class="flex flex-col justify-center items-center gap-4">
+      <app-home-header></app-home-header>
+      <p class="italic text-2xl font-ubuntu text-center">
+        Want to join the conversation?
+      </p>
+      <button class="btn btn-info" (click)="loginWithGoogle()">
+        LOG IN WITH GOOGLE!
+      </button>
+    </div>
+  </div>
 </div>

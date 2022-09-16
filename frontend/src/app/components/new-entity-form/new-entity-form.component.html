@@ -1,24 +1,24 @@
-<div class="px-2 newEntityForm">
-  <h4 class="text-xl pb-2">Publish new {{ newType }}:</h4>
+<h4 class="text-4xl pb-2 font-ubuntu mt-4">Publish new {{ newType }}:</h4>
+<div class="px-2 mt-2 mb-5 newEntityForm">
   <div class="flex flex-row gap-1">
     <div class="flex flex-col gap-1 grow">
       <input
         type="text"
         name="title"
         id="entityFormContent"
-        class="input input-sm"
-        placeholder="Title"
+        class="input input-sm input-bordered"
+        placeholder="What are your thoughts?"
       />
       <input
         type="text"
         name="author"
         id="entityFormAuthor"
-        class="input input-sm"
+        class="input input-sm input-bordered"
         placeholder="Author"
       />
     </div>
     <div>
-      <button class="btn btn-secondary w-20" (click)="createNewEntity()">
+      <button class="btn btn-secondary w-20 h-full" (click)="createNewEntity()">
         Send
       </button>
     </div>
