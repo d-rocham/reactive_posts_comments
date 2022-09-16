@@ -5,5 +5,8 @@
     [viewSocket]="viewSocket"
     [collectionType]="'posts'"
   ></app-live-entity-container>
-  <app-new-entity-form [newType]="'post'"></app-new-entity-form>
+  <app-new-entity-form
+    [newType]="'post'"
+    [token]="availableState.token"
+  ></app-new-entity-form>
 </div>

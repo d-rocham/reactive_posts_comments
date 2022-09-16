@@ -2,9 +2,10 @@ import { WebSocketSubject } from 'rxjs/webSocket';
 import { Component, Input, OnInit } from '@angular/core';
 import { Post } from 'src/app/models/post';
 import { Comment } from 'src/app/models/comment';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { WebSocketService } from 'src/app/services/web-socket.service';
 import { WebRequestsService } from 'src/app/services/web-requests.service';
+import { StateService } from 'src/app/services/state.service';
 
 @Component({
   selector: 'app-post-view',
@@ -15,14 +16,23 @@ export class PostViewComponent implements OnInit {
   post!: Post;
   viewSocket?: WebSocketSubject<Comment>;
 
+  availableState: any;
+
   constructor(
     private route: ActivatedRoute,
     private requestService: WebRequestsService,
-    private socketService: WebSocketService
+    private socketService: WebSocketService,
+    private stateService: StateService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.getPost();
+    if (this.validateLogin()) {
+      console.log('login validated');
+      this.getPost();
+    } else {
+      console.log('not validated');
+    }
   }
 
   getPost() {
@@ -49,5 +59,20 @@ export class PostViewComponent implements OnInit {
     this.post?.comments.unshift(newComment);
   }
 
-  // TODO: create comment functionality
+  validateLogin(): boolean {
+    let validationResult = false;
+
+    this.stateService.state.subscribe((currentState) => {
+      console.log(currentState);
+      this.availableState = currentState;
+
+      if (!currentState.loggedIn) {
+        this.router.navigateByUrl('');
+        validationResult = false;
+        return;
+      }
+      validationResult = true;
+    });
+    return validationResult;
+  }
 }

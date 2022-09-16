@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { WebSocketSubject } from 'rxjs/webSocket';
 import { Post } from 'src/app/models/post';
+import { StateService } from 'src/app/services/state.service';
 import { WebRequestsService } from 'src/app/services/web-requests.service';
 import { WebSocketService } from 'src/app/services/web-socket.service';
 
@@ -14,14 +16,23 @@ export class HomeViewComponent implements OnInit {
 
   sessionPosts: Post[] = [];
 
+  availableState: any;
+
   constructor(
     private socketService: WebSocketService,
-    private requestService: WebRequestsService
+    private requestService: WebRequestsService,
+    private stateService: StateService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.getPosts();
-    this.connectToSocket();
+    if (this.validateLogin()) {
+      console.log('login validated');
+      this.getPosts();
+      this.connectToSocket();
+    } else {
+      console.log('not validated');
+    }
   }
 
   addPost(post: Post) {
@@ -48,5 +59,22 @@ export class HomeViewComponent implements OnInit {
     this.requestService.getAllPosts().subscribe((incomingPosts) => {
       this.sessionPosts = incomingPosts;
     });
+  }
+
+  validateLogin(): boolean {
+    let validationResult = false;
+
+    this.stateService.state.subscribe((currentState) => {
+      console.log(currentState);
+      this.availableState = currentState;
+
+      if (!currentState.loggedIn) {
+        this.router.navigateByUrl('');
+        validationResult = false;
+        return;
+      }
+      validationResult = true;
+    });
+    return validationResult;
   }
 }

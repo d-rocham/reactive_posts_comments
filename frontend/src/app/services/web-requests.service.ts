@@ -8,38 +8,53 @@ import { newPost } from '../models/newPost';
   providedIn: 'root',
 })
 export class WebRequestsService {
-  // URL constants
-  private CREATEPOSTURL = 'https://alpha-microservice.herokuapp.com/createPost';
-  private CREATECOMMENTURL =
-    'https://alpha-microservice.herokuapp.com/addComment';
-
-  // TODO: add url for reaction, remaining crud operations
-
-  private GETPOSTBYID = 'https://beta-microservice.herokuapp.com/getPost/';
-  private GETALLPOSTS = 'https://beta-microservice.herokuapp.com/getAllPosts';
-
   constructor(private httpClient: HttpClient) {}
 
-  // Resource fetching methods
+  // URL constants
+  // TODO: add url for reaction, remaining crud operations
+  private CREATE_POST_URL =
+    'https://alpha-microservice.herokuapp.com/createPost';
+  private CREATE_COMMENT_URL =
+    'https://alpha-microservice.herokuapp.com/addComment';
+  private GET_POST_BY_ID_URL =
+    'https://beta-microservice.herokuapp.com/getPost/';
+  private GET_ALL_POSTS_URL =
+    'https://beta-microservice.herokuapp.com/getAllPosts';
+  private LOGIN_URL = 'https://alpha-microservice.herokuapp.com/auth/login';
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  };
+
   // TODO: handle request errors
 
+  public loginUser(command: any) {
+    return this.httpClient.post<any>(this.LOGIN_URL, command, this.httpOptions);
+  }
+
   public getPostById(postId: string): Observable<Post> {
-    return this.httpClient.get<Post>(`${this.GETPOSTBYID}${postId}`);
+    return this.httpClient.get<Post>(`${this.GET_POST_BY_ID_URL}${postId}`);
   }
 
   public getAllPosts(): Observable<Post[]> {
-    return this.httpClient.get<Post[]>(this.GETALLPOSTS);
+    return this.httpClient.get<Post[]>(this.GET_ALL_POSTS_URL);
   }
 
-  public createPost(newPost: newPost): Observable<Post> {
-    return this.httpClient.post<Post>(this.CREATEPOSTURL, newPost, {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  public createPost(newPost: newPost, token: string): Observable<Post> {
+    return this.httpClient.post<any>(this.CREATE_POST_URL, newPost, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      }),
     });
   }
 
-  public createComment(newComment: Comment): Observable<Post> {
-    return this.httpClient.post<Post>(this.CREATECOMMENTURL, newComment, {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  public createComment(newComment: Comment, token: string): Observable<Post> {
+    return this.httpClient.post<Post>(this.CREATE_COMMENT_URL, newComment, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      }),
     });
   }
 }

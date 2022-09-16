@@ -3,7 +3,6 @@ import { WebRequestsService } from 'src/app/services/web-requests.service';
 import { newPost } from 'src/app/models/newPost';
 import { Comment } from 'src/app/models/comment';
 import { ActivatedRoute } from '@angular/router';
-import { ThisReceiver } from '@angular/compiler';
 
 @Component({
   selector: 'app-new-entity-form',
@@ -13,6 +12,9 @@ import { ThisReceiver } from '@angular/compiler';
 export class NewEntityFormComponent implements OnInit {
   @Input()
   newType!: string;
+
+  @Input()
+  token!: string;
 
   createNew(): any {}
 
@@ -49,9 +51,11 @@ export class NewEntityFormComponent implements OnInit {
             ).value,
           };
 
+    console.log(this.token);
+
     this.newType === 'post'
-      ? this.requestService.createPost(newEntity).subscribe()
-      : this.requestService.createComment(newEntity).subscribe();
+      ? this.requestService.createPost(newEntity, this.token).subscribe()
+      : this.requestService.createComment(newEntity, this.token).subscribe();
   }
 
   ngOnInit(): void {}

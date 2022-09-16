@@ -16,6 +16,7 @@ import { HomeHeaderComponent } from './components/home-header/home-header.compon
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
+import { LoginViewComponent } from './views/login-view/login-view.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
     ReactionContainerComponent,
     ReactionEntityComponent,
     HomeHeaderComponent,
+    LoginViewComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-home-header',
@@ -7,14 +6,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./home-header.component.css'],
 })
 export class HomeHeaderComponent implements OnInit {
-  //TODO: create state service
-  constructor(private authenticationService: AuthenticationService) {}
+  constructor() {}
 
   ngOnInit(): void {}
-
-  async loginWithGoogle() {
-    const response = await this.authenticationService.loginWithGoogle();
-
-    // set state in service
-  }
 }
